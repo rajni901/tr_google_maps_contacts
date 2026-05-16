@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="tr_google_maps.MapWidget">
+        <div class="tr-map-wrapper">
+            <t t-if="state.apiKey and state.address">
+                <div class="tr-map-actions">
+                    <a t-att-href="state.googleMapsUrl" target="_blank" class="btn btn-sm btn-primary">
+                        <i class="fa fa-map-marker"/> Open in Google Maps
+                    </a>
+                </div>
+                <iframe
+                    t-att-src="state.embedUrl"
+                    t-att-height="state.height"
+                    width="100%"
+                    style="border:0; border-radius:8px;"
+                    allowfullscreen="1"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"/>
+            </t>
+            <t t-elif="not state.apiKey">
+                <div class="tr-map-no-key">
+                    <i class="fa fa-map-o fa-3x text-muted"/>
+                    <p class="text-muted mt-2">
+                        Google Maps API key not configured.<br/>
+                        Go to <strong>Settings → Google Maps</strong> to add your API key.
+                    </p>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="tr-map-no-address">
+                    <i class="fa fa-map-marker fa-3x text-muted"/>
+                    <p class="text-muted mt-2">No address found for this contact.</p>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

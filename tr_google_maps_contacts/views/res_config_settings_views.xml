@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_google_maps" model="ir.ui.view">
+        <field name="name">res.config.settings.google.maps</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <app data-string="Google Maps" string="Google Maps" name="tr_google_maps_contacts">
+                    <block title="Google Maps Configuration" id="google_maps_block">
+                        <setting string="API Key" help="Get your free API key from Google Cloud Console. Enable Maps Embed API.">
+                            <field name="google_maps_api_key" placeholder="AIzaSy..."/>
+                        </setting>
+                        <setting string="Default Zoom" help="Map zoom level (1-20). 15 is street level.">
+                            <field name="google_maps_zoom"/>
+                        </setting>
+                        <setting string="Map Height (px)" help="Height of the map in pixels.">
+                            <field name="google_maps_height"/>
+                        </setting>
+                    </block>
+                </app>
+            </form>
+        </field>
+    </record>
+
+</odoo>

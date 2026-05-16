@@ -1,0 +1,33 @@
+/* Google Maps Widget — Technical Rajni */
+
+.tr-map-wrapper {
+    padding: 10px;
+    min-height: 200px;
+}
+
+.tr-map-actions {
+    margin-bottom: 10px;
+}
+
+.tr-map-actions a {
+    text-decoration: none;
+}
+
+.tr-map-no-key,
+.tr-map-no-address {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #aaa;
+    text-align: center;
+    background: #f8f8f8;
+    border-radius: 8px;
+    border: 2px dashed #ddd;
+    padding: 30px;
+}
+
+.tr-google-map-container {
+    width: 100%;
+}
