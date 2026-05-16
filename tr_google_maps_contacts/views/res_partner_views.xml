@@ -6,11 +6,13 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//notebook/page[@name='internal_notes']" position="after">
                 <page string="Location Map" name="google_map_page">
-                    <div class="tr-google-map-container">
-                        <widget name="tr_google_map"/>
-                    </div>
+                    <field name="google_map_url" invisible="1"/>
+                    <field name="google_map_embed_url"
+                           widget="tr_google_map_iframe"
+                           nolabel="1"
+                           readonly="1"/>
                 </page>
             </xpath>
         </field>

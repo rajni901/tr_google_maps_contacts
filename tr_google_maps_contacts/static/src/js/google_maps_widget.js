@@ -1,75 +1,33 @@
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { useService } from "@web/core/utils/hooks";
-import { Component, useState, onWillStart, onWillUpdateProps } from "@odoo/owl";
+import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { Component } from "@odoo/owl";
 
-class GoogleMapWidget extends Component {
-    static template = "tr_google_maps.MapWidget";
+class GoogleMapIframe extends Component {
+    static template = "tr_google_maps.IframeWidget";
     static props = {
-        record: Object,
-        readonly: { type: Boolean, optional: true },
+        ...standardFieldProps,
     };
 
-    setup() {
-        this.rpc = useService("rpc");
-        this.state = useState({
-            apiKey: "",
-            address: "",
-            embedUrl: "",
-            googleMapsUrl: "",
-            height: 350,
-        });
-
-        onWillStart(async () => {
-            await this._loadSettings();
-            this._buildAddress();
-        });
-
-        onWillUpdateProps(async () => {
-            this._buildAddress();
-        });
+    get embedUrl() {
+        return this.props.record.data.google_map_embed_url || "";
     }
 
-    async _loadSettings() {
-        const result = await this.rpc("/web/dataset/call_kw", {
-            model: "ir.config_parameter",
-            method: "get_param",
-            args: ["tr_google_maps.api_key"],
-            kwargs: {},
-        });
-        this.state.apiKey = result || "";
-
-        const height = await this.rpc("/web/dataset/call_kw", {
-            model: "ir.config_parameter",
-            method: "get_param",
-            args: ["tr_google_maps.height"],
-            kwargs: {},
-        });
-        this.state.height = parseInt(height) || 350;
+    get mapUrl() {
+        return this.props.record.data.google_map_url || "";
     }
 
-    _buildAddress() {
-        const record = this.props.record.data;
-        const parts = [
-            record.street,
-            record.street2,
-            record.city,
-            record.zip,
-            record.country_id && record.country_id[1],
-        ].filter(Boolean);
+    get hasAddress() {
+        return !!this.props.record.data.google_map_url;
+    }
 
-        const address = parts.join(", ");
-        this.state.address = address;
-
-        if (address && this.state.apiKey) {
-            const encoded = encodeURIComponent(address);
-            this.state.embedUrl = `https://www.google.com/maps/embed/v1/place?key=${this.state.apiKey}&q=${encoded}`;
-            this.state.googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-        }
+    get hasApiKey() {
+        return !!this.props.record.data.google_map_embed_url;
     }
 }
 
-registry.category("view_widgets").add("tr_google_map", {
-    component: GoogleMapWidget,
+registry.category("fields").add("tr_google_map_iframe", {
+    component: GoogleMapIframe,
+    supportedTypes: ["char"],
 });

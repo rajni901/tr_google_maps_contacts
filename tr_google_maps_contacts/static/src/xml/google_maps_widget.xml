@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="tr_google_maps.MapWidget">
+    <t t-name="tr_google_maps.IframeWidget">
         <div class="tr-map-wrapper">
-            <t t-if="state.apiKey and state.address">
-                <div class="tr-map-actions">
-                    <a t-att-href="state.googleMapsUrl" target="_blank" class="btn btn-sm btn-primary">
+
+            <!-- No address -->
+            <t t-if="!hasAddress">
+                <div class="tr-map-placeholder">
+                    <i class="fa fa-map-marker fa-3x text-muted"/>
+                    <p class="text-muted mt-3">
+                        No address found for this contact.<br/>
+                        Please add a street address to show the map.
+                    </p>
+                </div>
+            </t>
+
+            <!-- Has address but no API key -->
+            <t t-elif="hasAddress and !hasApiKey">
+                <div class="tr-map-placeholder">
+                    <i class="fa fa-key fa-3x text-warning"/>
+                    <p class="text-muted mt-3">
+                        Google Maps API key not configured.<br/>
+                        Go to <strong>Settings → Google Maps</strong> to add your API key.
+                    </p>
+                    <a t-att-href="mapUrl" target="_blank" class="btn btn-sm btn-secondary mt-2">
+                        <i class="fa fa-external-link"/> Open in Google Maps
+                    </a>
+                </div>
+            </t>
+
+            <!-- Has address and API key — show map -->
+            <t t-else="">
+                <div class="mb-2">
+                    <a t-att-href="mapUrl" target="_blank" class="btn btn-sm btn-primary">
                         <i class="fa fa-map-marker"/> Open in Google Maps
                     </a>
                 </div>
                 <iframe
-                    t-att-src="state.embedUrl"
-                    t-att-height="state.height"
+                    t-att-src="embedUrl"
+                    height="400"
                     width="100%"
-                    style="border:0; border-radius:8px;"
+                    style="border:0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);"
                     allowfullscreen="1"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"/>
+                    loading="lazy"/>
             </t>
-            <t t-elif="not state.apiKey">
-                <div class="tr-map-no-key">
-                    <i class="fa fa-map-o fa-3x text-muted"/>
-                    <p class="text-muted mt-2">
-                        Google Maps API key not configured.<br/>
-                        Go to <strong>Settings → Google Maps</strong> to add your API key.
-                    </p>
-                </div>
-            </t>
-            <t t-else="">
-                <div class="tr-map-no-address">
-                    <i class="fa fa-map-marker fa-3x text-muted"/>
-                    <p class="text-muted mt-2">No address found for this contact.</p>
-                </div>
-            </t>
+
         </div>
     </t>
 
