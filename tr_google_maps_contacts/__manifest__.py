@@ -4,7 +4,7 @@
     'category': 'Contacts',
     'summary': 'Show Google Maps location on Contact, Customer and Vendor forms',
     'description': """
-Google Maps on Contacts — by Technical Rajni
+Google Maps on Contacts — by Vayu Sharma
 =============================================
 Displays an interactive Google Maps view directly on the contact form.
 
@@ -16,8 +16,8 @@ Features:
 - Works for Companies and Individuals
 - Street View support
     """,
-    'author': 'Technical Rajni',
-    'website': 'https://www.technicalrajni.com',
+    'author': 'Vayu Sharma',
+    'website': '',
     'license': 'OPL-1',
     'depends': ['contacts', 'base_setup'],
     'data': [
